@@ -3,7 +3,6 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
 
   before_action :set_case_workers, only: %i[new create]
   before_action :set_claims, only: %i[new create]
-  before_action :set_summary_values, only: [:new], if: :summary_from_previous_request?
   before_action :process_claim_ids, only: [:create], if: :quantity_allocation?
 
   helper_method :allocation_filters_for_scheme
@@ -27,19 +26,6 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
     flash[:notice] = notification(allocation)
     redirect_to case_workers_admin_allocations_path(tab: tab, scheme: scheme)
   end
-
-  def summary_from_previous_request?
-    params[:claim_ids].present? && (params[:case_worker_id].present? || params[:deallocate])
-  end
-
-  # TODO: these will also need to be remote API calls, eventually
-  # I don't think this is needed any more.
-  # def set_summary_values
-  #   @case_worker = CaseWorker.active.find(params[:case_worker_id]) rescue nil
-  #   @allocated_claims = Claim::BaseClaim.active.find(params[:claim_ids].reject(&:blank?))
-  #   params.delete(:case_worker_id)
-  #   params.delete(:claim_ids)
-  # end
 
   def quantity_allocation?
     quantity_to_allocate.positive?
