@@ -44,6 +44,7 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
   end
 
   def set_claims
+    return unless tab == 'allocated'
     @claims = Claims::CaseWorkerClaims.new(current_user: current_user, action: tab, criteria: criteria_params).claims
     add_claim_carousel_info
   end
