@@ -54,7 +54,7 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
   end
 
   def set_case_workers
-    @case_workers = CaseWorkerService.new(current_user: current_user).active
+    @case_workers = ::CaseWorker.active.includes(:user)
   end
 
   def set_claims

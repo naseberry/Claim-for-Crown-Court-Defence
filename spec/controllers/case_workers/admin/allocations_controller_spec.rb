@@ -65,8 +65,6 @@ RSpec.describe CaseWorkers::Admin::AllocationsController, type: :controller do
   end
 
   describe 'POST #create' do
-
-    let(:case_worker_service_instance) { double CaseWorkerService, active: 'case_worker_collection'}
     let(:case_worker_claims_instance) { double Claims::CaseWorkerClaims, claims: claims_collection }
     let(:claims_collection) { double  Remote::Claim, remote?: true, first: double('page of claims', map: [1, 3, 4]) }
     let(:allocation) { double Allocation, successful_claims: 'successful_claims_collection', case_worker: @case_worker }
@@ -89,7 +87,6 @@ RSpec.describe CaseWorkers::Admin::AllocationsController, type: :controller do
     end
 
     before(:each) do
-      expect(CaseWorkerService).to receive(:new).and_return(case_worker_service_instance)
       expect(Claims::CaseWorkerClaims).to receive(:new).and_return(case_worker_claims_instance)
       expect(Allocation).to receive(:new).with(expected_params)
       expect(Allocation).to receive(:new).with(expected_params_with_user).and_return(allocation)
@@ -112,21 +109,17 @@ RSpec.describe CaseWorkers::Admin::AllocationsController, type: :controller do
     end
   end
 
-
   describe 'GET #new' do
-    it 'calls the Caseworker service and Claims::CaseWorkerClaims services' do
-      case_worker_service = double CaseWorkerService
-      active_case_workers = double 'active case workers'
-      expect(CaseWorkerService).to receive(:new).with(current_user: @admin.user).and_return(case_worker_service)
-      expect(case_worker_service).to receive(:active).and_return(active_case_workers)
+    let(:active_case_workers) { ::CaseWorker.active }
 
+    it 'calls the Caseworker service and Claims::CaseWorkerClaims services' do
       claims_service = double Claims::CaseWorkerClaims
       expect(Claims::CaseWorkerClaims).to receive(:new).with(current_user: @admin.user, action: 'unallocated', criteria: standard_allocation_params).and_return(claims_service)
       expect(claims_service).to receive(:claims).and_return(claims_collection)
 
       get :new, params: { tab: tab }
 
-      expect(assigns(:case_workers)).to eq active_case_workers
+      expect(assigns(:case_workers)).to match_array(active_case_workers)
       expect(assigns(:claims)).to eq claims_collection
     end
   end
