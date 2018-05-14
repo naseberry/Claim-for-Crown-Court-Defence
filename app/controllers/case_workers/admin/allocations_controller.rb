@@ -83,7 +83,7 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
 
   def allocation_params
     allocator_params = params.require(:allocation).permit(:case_worker_id, :deallocate, claim_ids: [])
-    allocator_params.merge(allocating: is_allocating?)
+    allocator_params.to_h.merge(allocating: is_allocating?)
   end
 
   def notification(allocation)
