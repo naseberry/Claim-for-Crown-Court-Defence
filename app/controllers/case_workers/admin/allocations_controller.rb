@@ -5,8 +5,6 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
   before_action :set_claims, only: %i[new create]
   before_action :process_claim_ids, only: [:create], if: :quantity_allocation?
 
-  helper_method :allocation_filters_for_scheme
-
   def new
     @allocation = Allocation.new
   end
@@ -65,21 +63,8 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
     params[:value_band_id] || 0
   end
 
-  def filter_claims
-    @claims = @claims.filter(filter)
-  end
-
   def search_terms
     params[:search]
-  end
-
-  def search_claims(states = nil)
-    return unless search_terms.present?
-    @claims = @claims.search(search_terms, states, :case_worker_name_or_email)
-  end
-
-  def sort_and_paginate
-    @claims = @claims.sort_using(sort_column, sort_direction).page(current_page).per(page_size)
   end
 
   def allocation_params
@@ -101,17 +86,6 @@ class CaseWorkers::Admin::AllocationsController < CaseWorkers::Admin::Applicatio
 
   def is_allocating?
     params[:commit] == 'Allocate'
-  end
-
-  def allocation_filters_for_scheme(scheme)
-    if scheme == 'agfs'
-      %w[all fixed_fee cracked trial guilty_plea redetermination awaiting_written_reasons disk_evidence]
-    elsif scheme == 'lgfs'
-      %w[all fixed_fee graduated_fees interim_fees warrants interim_disbursements
-         risk_based_bills redetermination awaiting_written_reasons disk_evidence]
-    else
-      []
-    end
   end
 
   def default_page_size
