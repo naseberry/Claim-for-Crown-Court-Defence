@@ -91,5 +91,5 @@ bundle exec scheduler_daemon start
 echo "starting sidekiq daemon"
 bundle exec sidekiq -d
 
-echo "launching unicorn"
-bundle exec unicorn -p 80 -c config/unicorn.rb
+echo "launching puma"
+bundle exec puma -p 80 -c config/puma.rb

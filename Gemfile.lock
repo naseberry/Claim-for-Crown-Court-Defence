@@ -437,7 +437,7 @@ GEM
       pry (~> 0.10)
     pry-rails (0.3.6)
       pry (>= 0.10.4)
-    puma (3.11.2)
+    puma (3.11.4)
     rack (2.0.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -624,7 +624,7 @@ GEM
     unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    unicorn-rails (2.2.0)
+    unicorn-rails (2.2.1)
       rack
       unicorn
     unicorn-worker-killer (0.4.4)
@@ -731,7 +731,7 @@ DEPENDENCIES
   posix-spawn (~> 0.3.13)
   pry-byebug
   pry-rails
-  puma
+  puma (~> 3.11.4)
   rack-livereload (~> 0.3.16)
   rails (>= 5.0.0, < 5.1)
   rails-controller-testing
@@ -766,7 +766,7 @@ DEPENDENCIES
   test-prof
   timecop
   uglifier (>= 1.3.0)
-  unicorn-rails (= 2.2.0)
+  unicorn-rails (= 2.2.1)
   unicorn-worker-killer (~> 0.4.4)
   utf8-cleaner (~> 0.2)
   vcr

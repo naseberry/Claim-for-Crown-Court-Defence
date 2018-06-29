@@ -38,6 +38,7 @@ gem 'paper_trail',            '~> 9.0.2'
 gem 'pdf-forms'
 gem 'pg',                     '~> 0.18.2'
 gem 'rails',                  '>= 5.0.0', '< 5.1'
+gem 'puma',                   '~> 3.11.4'
 gem 'redis',                  '~> 3.3.1'
 gem 'rubyzip'
 gem 'config',                 '~> 1.2' # this gem provides our Settings.xxx mechanism
@@ -64,7 +65,7 @@ gem 'posix-spawn', '~> 0.3.13'
 
 group :production, :devunicorn do
   gem 'rails_12factor', '0.0.3'
-  gem 'unicorn-rails', '2.2.0'
+  gem 'unicorn-rails', '2.2.1'
   gem 'unicorn-worker-killer', '~> 0.4.4'
 end
 
@@ -87,7 +88,6 @@ group :development, :devunicorn, :test do
   gem 'rack-livereload',    '~> 0.3.16'
   gem 'rspec-rails'
   gem 'rspec-collection_matchers'
-  gem 'puma'
   gem 'parallel_tests'
   gem 'site_prism'
   gem 'guard-jasmine',      '~> 2.0'
