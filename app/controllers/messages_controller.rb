@@ -36,22 +36,21 @@ class MessagesController < ApplicationController
   def download_attachment
     raise 'No attachment present on this message' if message.attachment.blank?
 
-    send_file Paperclip.io_adapters.for(message.attachment).path, type:        message.attachment_content_type,
-                                                                  filename:    message.attachment_file_name,
-                                                                  x_sendfile:  true
+    send_file Paperclip.io_adapters.for(message.attachment).path,
+              type:       message.attachment_content_type,
+              filename:   message.attachment_file_name,
+              x_sendfile: true
   end
 
   private
 
   def message
-    @message ||=  Message.find(params[:id])
+    @message ||= Message.find(params[:id])
   end
 
   def send_email_if_required
     return unless current_user.persona.is_a?(CaseWorker)
-    return unless @message.claim.creator.send_email_notification_of_message?
-    return if @message.claim.creator.softly_deleted?
-    NotifyMailer.message_added_email(@message.claim).deliver_later
+    Claims::ProviderNotifier.call(@message.claim)
   end
 
   def redirect_to_url

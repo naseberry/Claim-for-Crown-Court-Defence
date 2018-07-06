@@ -44,6 +44,11 @@ RSpec.describe Claims::CaseWorkerClaimUpdater do
     it 'adds message to the claim', :wait do
       expect { updater.update! }.to change(updater.claim.messages, :count).by(1)
     end
+
+    it 'notifies the provider of an update on the claim', :wait do
+      expect(Claims::ProviderNotifier).to receive(:call).with(claim).once
+      updater.update!
+    end
   end
 
   shared_examples 'a successful assessment' do |state, fees='128.33', expenses='42.40'|
@@ -86,6 +91,11 @@ RSpec.describe Claims::CaseWorkerClaimUpdater do
     it 'does not add message to the claim', :wait do
       expect { updater.update! }.to_not change(updater.claim.messages, :count)
     end
+
+    it 'does not notify the provider of an update on the claim', :wait do
+      expect(Claims::ProviderNotifier).not_to receive(:call).with(claim)
+      updater.update!
+    end
   end
 
   shared_examples 'an erroneous determination' do |state, expected_error, determination_type = 'redeterminations', state_reason = [], fees = '128.33', expenses = '42.40', error_field = :determinations|
@@ -122,6 +132,11 @@ RSpec.describe Claims::CaseWorkerClaimUpdater do
 
     it 'does NOT add message to the claim', :wait do
       expect { updater.update! }.to_not change(updater.claim.messages, :count)
+    end
+
+    it 'does not notify the provider of an update on the claim', :wait do
+      expect(Claims::ProviderNotifier).not_to receive(:call).with(claim)
+      updater.update!
     end
 
     it 'adds errors on claim' do
@@ -310,6 +325,11 @@ RSpec.describe Claims::CaseWorkerClaimUpdater do
       it 'adds message to the claim', :wait do
         expect { updater.update! }.to change(claim.messages, :count).by(1)
       end
+
+      it 'notifies the provider of an update on the claim', :wait do
+        expect(Claims::ProviderNotifier).to receive(:call).with(claim).once
+        updater.update!
+      end
     end
   end
 
@@ -345,6 +365,11 @@ RSpec.describe Claims::CaseWorkerClaimUpdater do
 
       it 'adds message to the claim', :wait do
         expect { updater.update! }.to change(claim.messages, :count).by(1)
+      end
+
+      it 'notifies the provider of an update on the claim', :wait do
+        expect(Claims::ProviderNotifier).to receive(:call).with(claim).once
+        updater.update!
       end
     end
   end
@@ -420,4 +445,3 @@ RSpec.describe Claims::CaseWorkerClaimUpdater do
     end
   end
 end
-

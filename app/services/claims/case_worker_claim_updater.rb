@@ -46,7 +46,8 @@ module Claims
 
     def add_message
       return unless Release.reject_refuse_messaging_released?
-      claim.messages.create(sender_id: current_user.id, body: transition_message)
+      message = claim.messages.create(sender_id: current_user.id, body: transition_message)
+      Claims::ProviderNotifier.call(claim) if message
     end
 
     def transition_message
