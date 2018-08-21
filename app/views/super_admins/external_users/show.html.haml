@@ -3,6 +3,9 @@
 %h2
   = @external_user.email
 
+%div#claim_state
+  =column_chart @external_user.claims.group(:state).count, { id: 'state-chart', width: '800px', height: '200px' }
+
 %p
   Provider:
   = link_to @external_user.provider.name, super_admins_provider_path(@provider)
