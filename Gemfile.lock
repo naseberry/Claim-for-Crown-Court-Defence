@@ -103,6 +103,7 @@ GEM
       activesupport
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    chartkick (3.0.1)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
     chronic (0.10.2)
@@ -677,6 +678,7 @@ DEPENDENCIES
   byebug
   cancancan (~> 1.15)
   capybara
+  chartkick
   climate_control
   cocoon (~> 1.2.6)
   codeclimate-test-reporter
@@ -781,4 +783,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
