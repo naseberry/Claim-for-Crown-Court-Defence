@@ -2,6 +2,10 @@
 %h2.heading-medium
   = @provider.name
 
+.graph-container.container#chart-source-test
+  -options = {id: 'state-chart', width: "800px", height: "200px", messages: {empty: "No data"} }
+  =column_chart @provider.claims.where.not(state: 'archived_pending_delete').group(:state).count, options
+
 .grid-row
   .column-one-third
     %h3
