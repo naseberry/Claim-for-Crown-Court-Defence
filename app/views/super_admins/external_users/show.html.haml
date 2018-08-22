@@ -2,7 +2,7 @@
 
 .graph-container.container#chart-source-test
   -options = {id: 'state-chart', width: "800px", height: "200px", messages: {empty: "No data"} }
-  =column_chart @external_user.provider.claims.where.not(state: 'archived_pending_delete').group(:state).count, options
+  =column_chart @external_user.claims_created.where.not(state: 'archived_pending_delete').group(:state).count, options
 
 %h2
   = @external_user.email
