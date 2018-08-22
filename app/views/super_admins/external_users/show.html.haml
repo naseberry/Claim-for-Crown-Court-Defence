@@ -4,7 +4,7 @@
   = @external_user.email
 
 %div#claim_state
-  =column_chart @external_user.claims.group(:state).count, { id: 'state-chart', width: '800px', height: '200px' }
+  =column_chart @external_user.provider.claims.where.not(state: 'archived_pending_delete').group(:state).count, { id: 'state-chart', width: '800px', height: '200px' }
 
 %p
   Provider:
