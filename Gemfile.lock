@@ -103,6 +103,8 @@ GEM
       activesupport
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    chartjs-ror (3.6.2)
+      rails (>= 3.1)
     chartkick (3.0.1)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
@@ -678,6 +680,7 @@ DEPENDENCIES
   byebug
   cancancan (~> 1.15)
   capybara
+  chartjs-ror
   chartkick
   climate_control
   cocoon (~> 1.2.6)
