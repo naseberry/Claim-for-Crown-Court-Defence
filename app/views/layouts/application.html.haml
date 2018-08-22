@@ -6,8 +6,8 @@
 - content_for :head do
   %meta{:name =>"format-detection", :content => "telephone=no"}
 
-  = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
   = javascript_include_tag "charting"
+  = javascript_include_tag "https://www.gstatic.com/charts/loader.js"
 
   -# default CSS to v1
   - content_for(:v1_stylesheets) do
