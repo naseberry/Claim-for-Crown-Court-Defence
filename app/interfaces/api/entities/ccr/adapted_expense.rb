@@ -11,16 +11,16 @@ module API
           expose :rate
         end
 
+        def date_incurred
+          object.date
+        end
+
         private
 
         delegate :bill_type, :bill_subtype, :description, :quantity, :rate, to: :adapter
 
         def adapter
           @adapter ||= ::CCR::ExpensesAdapter.new(object)
-        end
-
-        def date_incurred
-          object.date
         end
       end
     end

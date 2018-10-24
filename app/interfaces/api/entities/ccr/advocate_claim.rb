@@ -60,7 +60,7 @@ module API
           data.push AdaptedBasicFee.represent(basic_fees)
           data.push AdaptedFixedFee.represent(fixed_fees)
           data.push AdaptedMiscFee.represent(miscellaneous_fees)
-          data.push AdaptedExpense.represent(object.expenses)
+          data.push grouped_expenses
           data.flatten.as_json
         end
 
@@ -96,6 +96,35 @@ module API
               memo << f if f.claimed?
             end
           end
+        end
+
+        def grouped_expenses
+          result = []
+          grouped_expenses = object.expenses.group(:expense_type_id).group(:mileage_rate_id).count
+          grouped_expenses.each do |key_array, v|
+            expense_type_id = key_array[0]
+            mileage_rate = key_array[1]
+            these_expenses = object.expenses.where(expense_type_id: expense_type_id)
+            if v > 10
+              # TODO: magic stuff to total group
+              temp_array = AdaptedExpense.represent(these_expenses)
+              puts "I want to inject a single AdaptedExpense with a combined total quantity of #{temp_array.count} and a rate of #{temp_array.map(&:rate).inject(0, &:+)}"
+              injection_attempt = [
+                {
+                  bill_type: temp_array.first.bill_type,
+                  bill_subtype: temp_array.first.bill_subtype,
+                  date_incurred: temp_array.first.date_incurred,
+                  description: "#{temp_array.first.description} - #{temp_array.count} dates between #{temp_array.first.date_incurred} and #{temp_array.last.date_incurred}",
+                  quantity: '1',
+                  rate: sprintf('%.2f', temp_array.map(&:rate).inject(0, &:+))
+                }]
+              result.push injection_attempt
+            else
+              result.push AdaptedExpense.represent(these_expenses)
+            end
+          end
+          # result.push AdaptedExpense.represent(object.expenses)
+          result
         end
       end
     end
