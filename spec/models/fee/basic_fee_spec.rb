@@ -49,4 +49,41 @@ RSpec.describe Fee::BasicFee do
       expect(fee.calculated?).to be true
     end
   end
+
+  describe '#discontinuance_ppe_served' do
+    subject(:fee_type_valid?) { fee_type.valid? }
+
+    let(:claim) { build(:advocate_claim, case_type: case_type)}
+    let(:fee_type) { build(:basic_fee, :baf_fee, discontinuance_ppe_served: submitted_value, claim: claim) }
+
+    before { claim.force_validation = true }
+
+    context 'when the case_type is `discontinuance`' do
+      let(:case_type) { build(:case_type, :discontinuance) }
+
+      context 'and discontinuance_ppe_served is true' do
+        let(:submitted_value) { true }
+        it { is_expected.to be true }
+      end
+
+      context 'and discontinuance_ppe_served is false' do
+        let(:submitted_value) { false }
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when the case_type is not `discontinuance`' do
+      let(:case_type) { build(:case_type, :retrial) }
+
+      context 'and discontinuance_ppe_served is true' do
+        let(:submitted_value) { true }
+        it { is_expected.to be false }
+      end
+
+      context 'and discontinuance_ppe_served is false' do
+        let(:submitted_value) { false }
+        it { is_expected.to be true }
+      end
+    end
+  end
 end
