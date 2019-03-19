@@ -62,7 +62,7 @@ Feature: Litigator partially fills out a draft interim claim, then later edits a
     And I eject the VCR cassette
 
     And I should see a page title "Enter fees for litigator interim fees claim"
-    Then I click "Continue" in the claim form and move to the 'Evidence supplied on disk' form page
+    Then I click "Continue" in the claim form and move to the 'Supporting evidence' form page
 
     And I upload the document 'indictment.pdf'
     And I check the evidence boxes for 'A copy of the indictment'

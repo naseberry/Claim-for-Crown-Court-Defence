@@ -36,7 +36,7 @@ Feature: Advocate creates, saves, edits then submits a claim for a final fee tri
     Given I insert the VCR cassette 'features/claims/advocate/scheme_ten/trial_claim_edit'
 
     When I select the first search result
-    Then I should be in the 'Fees' form page
+    Then I should be in the 'Graduated fees' form page
 
     And I should see the advocate categories 'Junior,Leading junior,QC'
     And I should see the scheme 10 applicable basic fees

@@ -62,7 +62,7 @@ Feature: Advocate submits a claim for a Fixed fee (Appeal against conviction)
     And I should see a page title "Enter travel expenses for advocate final fees claim"
     Then I click "Continue" in the claim form
 
-    And I should be in the 'Evidence supplied on disk' form page
+    And I should be in the 'Supporting evidence' form page
     And I upload the document 'indictment.pdf'
     And I should see 10 evidence check boxes
     And I check the evidence boxes for 'A copy of the indictment'
