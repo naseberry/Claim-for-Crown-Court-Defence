@@ -2,10 +2,10 @@
   - if claim.display_reject_refuses_reasons?
     = render partial: 'shared/claim_state_transition_reasons', locals: { claim: claim }
 
-  = render partial: 'shared/summary_totals', locals: { claim: claim }
+  = render partial: 'shared/summary_totals', locals: { claim: claim, tableClass: 'figures' }
 
   %h3.heading-medium
-    = "Assessment summary"
+    = t('.heading')
 
   %table#determinations{summary: t('.summary')}
     %caption.visuallyhidden

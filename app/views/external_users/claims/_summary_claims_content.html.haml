@@ -12,6 +12,8 @@
           %li
             = t("external_users.claims.#{section}.summary.header")
 
+= render partial: 'shared/summary_totals', locals: { claim: claim, tableClass: 'summary' }
+
 - claim.summary_sections.each do |section, associated_step|
   - if claim.accessible_step?(associated_step)
     = render partial: "external_users/claims/#{section}/summary", locals: { claim: claim, step: associated_step, section: section, editable: claim.editable_step?(associated_step) }
