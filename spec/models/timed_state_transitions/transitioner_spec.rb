@@ -178,11 +178,17 @@ RSpec.describe TimedTransitions::Transitioner do
               let(:record) { @claim.defendants.first.representation_orders.first }
               before do
                 record.update_attribute(:maat_reference, '999')
+                @claim.update_attribute(:evidence_checklist_ids, [2])
               end
 
               it 'submodel is invalid' do
                 record.valid?
                 expect(record.errors.messages).to include(maat_reference: ['invalid'])
+              end
+
+              it 'invalid evidence checklist ids raises an error' do
+                record.valid?
+                expect { @claim.save! }.to raise_error(ActiveRecord::RecordInvalid)
               end
 
               it 'still transitions to archived_pending_delete' do
