@@ -46,7 +46,7 @@ module Claims
 
     def add_message
       return unless Release.reject_refuse_messaging_released?
-      NotifyMailer.send_email_if_required(claim)
+      NotifyMailer.send_email_if_required(claim).deliver_later
       claim.messages.create(sender_id: current_user.id, body: transition_message)
     end
 

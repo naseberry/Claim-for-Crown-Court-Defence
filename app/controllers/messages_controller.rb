@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params.merge(sender_id: current_user.id))
 
     if @message.save
-      NotifyMailer.send_email_if_required(@message.claim)
+      NotifyMailer.send_email_if_required(@message.claim).deliver_later
       @notification = { notice: 'Message successfully sent' }
     else
       @notification = { alert: 'Message not sent: ' + @message.errors.full_messages.join(', ') }

@@ -131,7 +131,7 @@ RSpec.describe MessagesController, type: :controller do
           claim.creator.email_notification_of_message = 'true'
           sign_in sender.user
           mock_mail = double 'Mail message'
-          expect(NotifyMailer).to receive(:message_added_email).and_return(mock_mail)
+          expect(NotifyMailer).to receive(:send_email_if_required).and_return(mock_mail)
           expect(mock_mail).to receive(:deliver_later)
           post :create, params: { message: message_params }
         end
