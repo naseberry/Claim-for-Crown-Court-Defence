@@ -15,4 +15,11 @@ class NotifyMailer < GovukNotifyRails::Mailer
     )
     mail(to: user.email)
   end
+
+  def send_email_if_required(claim)
+    return unless current_user.persona.is_a?(CaseWorker)
+    return unless claim.creator.send_email_notification_of_message?
+    return if claim.creator.softly_deleted?
+    NotifyMailer.message_added_email(claim).deliver_later
+  end
 end
