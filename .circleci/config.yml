@@ -30,6 +30,24 @@ references:
           POSTGRES_DB: cccd_test
           POSTGRES_PASSWORD: ""
 
+  smoke_test_container_config: &smoke_test_container_config
+    working_directory: ~/repo
+    docker:
+      - image: "${ECR_ENDPOINT}/laa-get-paid/cccd:${CIRCLE_SHA1}"
+        environment:
+          CBO_BASE_DATABASE_DATABASE: cccd_smoketest
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          RAILS_ENV: test
+          TZ: Europe/London
+          GITHUB_TEAM_NAME_SLUG: laa-get-paid
+          REPO_NAME: cccd
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: cccd_smoketest
+          POSTGRES_PASSWORD: ""
+
   decrypt_secrets: &decrypt_secrets
     run:
       name: Decrypt secrets file
@@ -128,6 +146,17 @@ references:
       name: Install wkhtmltopdf
       command: |
         sudo apt-get update && sudo apt-get -y install wkhtmltopdf
+
+  _smoketest: &smoketest
+    run:
+      name: Run smoketest
+      command: |
+        # export ADMIN_PASSWORD=${SMOKE_TEST_ADMIN_PASSWORD} >> $BASH_ENV
+        # export CASE_WORKER_PASSWORD=${SMOKE_TEST_CASE_WORKER_PASSWORD} >> $BASH_ENV
+        # export ADVOCATE_PASSWORD=${SMOKE_TEST_ADVOCATE_PASSWORD} >> $BASH_ENV
+        bundle exec rake db:migrate
+        # bundle exec rake api:smoke_test
+
 
   _build-docker-image: &build_docker_image
     run:
@@ -420,50 +449,64 @@ workflows:
       - build-and-push-docker:
           requires:
             - upload-coverage
-      - auto-deploy-dev:
+      - smoketest:
           requires:
             - build-and-push-docker
-          filters:
-            branches:
-              only:
-                - master
-      - hold-dev:
-          type: approval
-          requires:
-            - build-and-push-docker
-          filters:
-            branches:
-              ignore:
-                - master
-      - deploy-dev:
-          requires:
-            - hold-dev
-          filters:
-            branches:
-              ignore:
-                - master
-      - hold-api-sandbox:
-          type: approval
-          requires:
-            - build-and-push-docker
-      - deploy-api-sandbox:
-          requires:
-            - hold-api-sandbox
-      - hold-staging:
-          type: approval
-          requires:
-            - build-and-push-docker
-      - deploy-staging:
-          requires:
-            - hold-staging
-      - hold-production:
-          type: approval
-          requires:
-            - build-and-push-docker
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-production:
-          requires:
-            - hold-production
+      # - auto-deploy-dev:
+      #     requires:
+      #       - build-and-push-docker
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      # - hold-dev:
+      #     type: approval
+      #     requires:
+      #       - build-and-push-docker
+      #     filters:
+      #       branches:
+      #         ignore:
+      #           - master
+      # - deploy-dev:
+      #     requires:
+      #       - hold-dev
+      #     filters:
+      #       branches:
+      #         ignore:
+      #           - master
+      # - hold-api-sandbox:
+      #     type: approval
+      #     requires:
+      #       - build-and-push-docker
+      # - deploy-api-sandbox:
+      #     requires:
+      #       - hold-api-sandbox
+      # - hold-staging:
+      #     type: approval
+      #     requires:
+      #       - build-and-push-docker
+      # - deploy-staging:
+      #     requires:
+      #       - hold-staging
+      # - hold-production:
+      #     type: approval
+      #     requires:
+      #       - build-and-push-docker
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      # - deploy-production:
+      #     requires:
+      #       - hold-production
+  # mornings:
+  #   triggers:
+  #     - schedule:
+  #         cron: "0 8 * * *"
+  #         filters:
+  #           branches:
+  #             only:
+  #               - master
+  #               - kubernetes-smoketest
+  #   jobs:
+  #     - smoke-test
