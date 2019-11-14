@@ -332,7 +332,7 @@ jobs:
   smoketest:
     <<: *smoke_test_container_config
     steps:
-      -smoke-test
+      - *smoke-test
 
   upload-coverage:
     <<: *build_container_config
@@ -437,23 +437,23 @@ workflows:
   build-and-test:
     jobs:
       - build
-      - other-tests:
-          requires:
-            - build
-      - rspec-tests:
-          requires:
-            - build
-      - cucumber-tests:
-          requires:
-            - build
-      - upload-coverage:
-          requires:
-            - rspec-tests
-            - cucumber-tests
-            - other-tests
+      # - other-tests:
+      #     requires:
+      #       - build
+      # - rspec-tests:
+      #     requires:
+      #       - build
+      # - cucumber-tests:
+      #     requires:
+      #       - build
+      # - upload-coverage:
+      #     requires:
+      #       - rspec-tests
+      #       - cucumber-tests
+      #       - other-tests
       - build-and-push-docker:
           requires:
-            - upload-coverage
+            - build
       - smoketest:
           requires:
             - build-and-push-docker
