@@ -147,7 +147,7 @@ references:
       command: |
         sudo apt-get update && sudo apt-get -y install wkhtmltopdf
 
-  _smoketest: &smoketest
+  _smoke-test: &smoke-test
     run:
       name: Run smoketest
       command: |
@@ -328,6 +328,11 @@ jobs:
       - *rubocop
       - *brakeman
       - *jasmine
+
+  smoketest:
+    <<: *smoke_test_container_config
+    steps:
+      -smoke-test
 
   upload-coverage:
     <<: *build_container_config
