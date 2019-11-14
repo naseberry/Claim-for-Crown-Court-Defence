@@ -33,7 +33,7 @@ references:
   smoke_test_container_config: &smoke_test_container_config
     working_directory: ~/repo
     docker:
-      - image: "${ECR_ENDPOINT}/laa-get-paid/cccd:${CIRCLE_SHA1}"
+      - image: "${ECR_ENDPOINT}/laa-get-paid/cccd:app-${CIRCLE_SHA1}"
         environment:
           CBO_BASE_DATABASE_DATABASE: cccd_smoketest
           PGHOST: 127.0.0.1
