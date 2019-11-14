@@ -31,7 +31,6 @@ references:
           POSTGRES_PASSWORD: ""
 
   smoke_test_container_config: &smoke_test_container_config
-    working_directory: ~/repo
     docker:
       - image: "${ECR_ENDPOINT}/laa-get-paid/cccd:app-${CIRCLE_SHA1}"
         environment:
