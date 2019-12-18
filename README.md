@@ -31,7 +31,7 @@ brew bundle
 ```
 
 ### Setup
-
+TEST
 Install gems, set environment files and setup database
 
 ```
