@@ -15,4 +15,10 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+
 console.log('Hello World from Webpacker')
+
+// Images assets
+require.context('govuk_frontend_toolkit/images');
+// Stylesheets pack
+import '../stylesheets/application.scss';
