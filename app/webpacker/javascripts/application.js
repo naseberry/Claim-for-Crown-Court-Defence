@@ -1,26 +1,80 @@
 /*global GOVUK*/
-//= require polyfill.object.keys.js
-//= require jquery
-//= require jquery_ujs
-//= require jquery.remotipart
-//= require cocoon
-//= require dropzone
-//= require vendor/polyfills/bind
-//= require govuk/stick-at-top-when-scrolling
-//= require govuk/stop-scrolling-at-footer
-//= require moj
-//= require modules/moj.cookie-message.js
-//= require jquery-accessible-accordion-aria.js
-//= require typeahead-aria.js
-//= require jquery.jq-element-revealer.js
-// = require jquery.datatables.min.js
-//= require jsrender.min.js
-//= require jquery.highlight-5.min.js
-//= require jquery.ba-throttle-debounce.js
-//= require accessible-autocomplete.min.js
-//= require_tree ./modules
-//= require_tree ./plugins
-//
+import './polyfill.object.keys';
+import 'jquery/src/jquery';
+import 'jquery-ujs/src/rails';
+import './jquery.iframe-transport';
+import './jquery.remotipart';
+import 'cocoon/app/assets/javascripts/cocoon';
+import 'dropzone';
+import './vendor/polyfills/bind';
+import 'govuk_frontend_toolkit/javascripts/govuk/stick-at-top-when-scrolling';
+import 'govuk_frontend_toolkit/javascripts/govuk/stop-scrolling-at-footer';
+import './moj';
+import './modules/moj.cookie-message';
+import './jquery-accessible-accordion-aria';
+import './typeahead-aria';
+import './jquery.jq-element-revealer';
+// import './jquery.datatables.min';
+import 'datatables.net-dt';
+import 'datatables.net-buttons-dt';
+import 'datatables.net-buttons';
+import 'datatables.net-fixedheader-dt';
+import './jsrender.min';
+import 'jquery-highlight/jquery.highlight';
+import './jquery.ba-throttle-debounce';
+import 'accessible-autocomplete';
+import './modules/Helpers.API.Core';
+import './modules/Helpers.API.Distance';
+import './modules/Helpers.API.Establishments';
+import './modules/Helpers.Autocomplete';
+import './modules/Helpers.DataTables';
+import './modules/Helpers.FormControls';
+import './modules/Modules.AddEditAdvocate';
+import './modules/Modules.AllocationDataTable';
+import './modules/Modules.AllocationFilterSubmit';
+import './modules/Modules.AllocationScheme';
+import './modules/Modules.AmountAssessed';
+import './modules/Modules.Autocomplete';
+import './modules/Modules.DataTables';
+import './modules/Modules.ExpensesDataTable';
+import './modules/Modules.HideErrorOnChange';
+import './modules/Modules.Messaging';
+import './modules/Modules.OffenceSearchInput';
+import './modules/Modules.OffenceSearchView';
+import './modules/Modules.OffenceSelectedView';
+import './modules/Modules.Providers';
+import './modules/Modules.SelectAll';
+import './modules/Modules.TableRowClick';
+import './modules/Plugin.jqDataTable.filter';
+import './modules/case_worker/Allocation';
+import './modules/case_worker/ReAllocation';
+import './modules/case_worker/admin/Modules.ManagementInformation';
+import './modules/case_worker/claims/DeterminationCalculator';
+import './modules/details.polyfill';
+import './modules/external_users/claims/BasicFeeDateCtrl';
+import './modules/external_users/claims/BlockHelpers';
+import './modules/external_users/claims/CaseTypeCtrl';
+import './modules/external_users/claims/ClaimIntentions';
+import './modules/external_users/claims/CocoonHelper';
+import './modules/external_users/claims/DisbursementsCtrl';
+import './modules/external_users/claims/Dropzone';
+import './modules/external_users/claims/DuplicateExpenseCtrl';
+import './modules/external_users/claims/FeeFieldsDisplay';
+import './modules/external_users/claims/FeePopulator';
+import './modules/external_users/claims/FeeSectionDisplay';
+import './modules/external_users/claims/InterimFeeFieldsDisplay';
+import './modules/external_users/claims/NewClaim';
+import './modules/external_users/claims/OffenceCtrl';
+import './modules/external_users/claims/SchemeFilter';
+import './modules/external_users/claims/SideBar';
+import './modules/external_users/claims/TransferDetailFieldsDisplay';
+import './modules/external_users/claims/TransferDetailsCtrl';
+import './modules/external_users/claims/fee_calculator/FeeCalculator.GraduatedPrice';
+import './modules/external_users/claims/fee_calculator/FeeCalculator.UnitPrice';
+import './modules/external_users/claims/fee_calculator/FeeCalculator';
+import './modules/show-hide-content';
+import './plugins/jquery.numbered.elements';
+
 
 // TINY PUBSUB
 // Great little wrapper to easily do pub/sub

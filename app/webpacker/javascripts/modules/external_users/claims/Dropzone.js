@@ -1,3 +1,5 @@
+import Dropzone from 'dropzone';
+
 moj.Modules.Dropzone = {
   init: function () {
     var self = this;

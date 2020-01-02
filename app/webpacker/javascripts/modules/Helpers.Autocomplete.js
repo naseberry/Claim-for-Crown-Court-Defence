@@ -1,8 +1,10 @@
-(function(exports, $) {
+import accessibleAutocomplete from 'accessible-autocomplete';
+
+(function (exports, $) {
   var Module = exports.Helpers.Autocomplete || {};
 
   //
-  Module.new = function(element, options) {
+  Module.new = function (element, options) {
     var selectElement, config;
     if (!(typeof element === 'string' || element instanceof String)) {
       throw new Error('Param: `element` is missing or not a string');
@@ -21,10 +23,10 @@
       autoselect: true,
 
       // Overwriting this method to be able to $.publish() the event
-      onConfirm: function(query) {
+      onConfirm: function (query) {
 
         // filter the select options, return the matching one
-        var requestedOption = [].filter.call(selectElement.options, function(option) {
+        var requestedOption = [].filter.call(selectElement.options, function (option) {
           return (option.textContent || option.innerText) === query;
         })[0];
 

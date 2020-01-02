@@ -7,7 +7,6 @@
   %meta{ name: 'format-detection', content: 'telephone=no' }
 
   = stylesheet_pack_tag 'application', media: 'all'
-  = javascript_pack_tag 'application'
 
   - if GoogleAnalytics::DataTracking.enabled?
     = render partial: 'layouts/analytics', :formats => [:js], locals: { adapter: GoogleAnalytics::DataTracking.adapter_name }
@@ -63,7 +62,7 @@
   = render partial: 'layouts/footer'
 
 - content_for :body_end do
-  = javascript_include_tag Rails.env.test? ? 'application.test' : 'application'
+  = javascript_pack_tag Rails.env.test? ? 'application-test' : 'application'
   - if GoogleAnalytics::DataTracking.analytics?
     :javascript
       ga(function(tracker) {
