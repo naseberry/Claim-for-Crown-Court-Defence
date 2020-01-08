@@ -9,6 +9,7 @@
 import '../javascripts/application.js';
 
 // Images
+require.context('../images', true);
 require.context('govuk_frontend_toolkit/images', true);
 
 // Stylesheets
