@@ -15,8 +15,13 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-console.log('Hello World from Webpacker')
+// Libraries required by all environments (i.e jQuery)
+// should be loaded in the config
+// see: ./app/config/webpack/environment.js
 
+
+// Javascript
+import '../javascripts/application.js';
 
 // Images
 require.context('../images', true);
