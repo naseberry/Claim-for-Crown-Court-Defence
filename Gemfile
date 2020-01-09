@@ -63,6 +63,7 @@ gem 'ruby-progressbar'
 gem 'geckoboard-ruby'
 gem 'posix-spawn', '~> 0.3.13'
 gem 'laa-fee-calculator-client', '~> 1.0'
+gem 'webpacker',  '~> 4.0'
 gem 'wicked_pdf', '~> 1.4'
 
 group :production, :devunicorn do
