@@ -120,7 +120,7 @@ moj.Modules.OffenceSearchInput = {
   // when required. Uses $.debounce to limit calls
   trackUserInput: function () {
     var self = this;
-    this.$input.on('keyup', $.debounce(290, function (e) {
+    this.$input.on('keyup', debounce(290, function (e) {
       if (self.$input.val().length >= 3) {
         self.runQuery();
       }

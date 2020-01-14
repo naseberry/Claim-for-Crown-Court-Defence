@@ -60,13 +60,13 @@
 // the `Cowboy` namespace. Usage will be exactly the same, but instead of
 // $.method() or jQuery.method(), you'll need to use Cowboy.method().
 
-(function(window,undefined){
+(function (window, undefined) {
   '$:nomunge'; // Used by YUI compressor.
 
   // Since jQuery really isn't required for this plugin, use `jQuery` as the
   // namespace only if it already exists, otherwise use the `Cowboy` namespace,
   // creating it if necessary.
-  var $ = window.jQuery || window.Cowboy || ( window.Cowboy = {} ),
+  var $ = window.jQuery || window.Cowboy || (window.Cowboy = {}),
 
     // Internal method reference.
     jq_throttle;
@@ -119,7 +119,7 @@
   //
   //  (Function) A new, throttled, function.
 
-  $.throttle = jq_throttle = function( delay, no_trailing, callback, debounce_mode ) {
+  $.throttle = jq_throttle = function (delay, no_trailing, callback, debounce_mode) {
     // After wrapper has stopped being called, this timeout ensures that
     // `callback` is executed at the proper times in `throttle` and `end`
     // debounce modes.
@@ -129,7 +129,7 @@
       last_exec = 0;
 
     // `no_trailing` defaults to falsy.
-    if ( typeof no_trailing !== 'boolean' ) {
+    if (typeof no_trailing !== 'boolean') {
       debounce_mode = callback;
       callback = no_trailing;
       no_trailing = undefined;
@@ -146,7 +146,7 @@
       // Execute `callback` and update the `last_exec` timestamp.
       function exec() {
         last_exec = +new Date();
-        callback.apply( that, args );
+        callback.apply(that, args);
       };
 
       // If `debounce_mode` is true (at_begin) this is used to clear the flag
@@ -155,21 +155,21 @@
         timeout_id = undefined;
       };
 
-      if ( debounce_mode && !timeout_id ) {
+      if (debounce_mode && !timeout_id) {
         // Since `wrapper` is being called for the first time and
         // `debounce_mode` is true (at_begin), execute `callback`.
         exec();
       }
 
       // Clear any existing timeout.
-      timeout_id && clearTimeout( timeout_id );
+      timeout_id && clearTimeout(timeout_id);
 
-      if ( debounce_mode === undefined && elapsed > delay ) {
+      if (debounce_mode === undefined && elapsed > delay) {
         // In throttle mode, if `delay` time has been exceeded, execute
         // `callback`.
         exec();
 
-      } else if ( no_trailing !== true ) {
+      } else if (no_trailing !== true) {
         // In trailing throttle mode, since `delay` time has not been
         // exceeded, schedule `callback` to execute `delay` ms after most
         // recent execution.
@@ -179,14 +179,14 @@
         //
         // If `debounce_mode` is false (at end), schedule `callback` to
         // execute after `delay` ms.
-        timeout_id = setTimeout( debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay );
+        timeout_id = setTimeout(debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay);
       }
     };
 
     // Set the guid of `wrapper` function to the same of original callback, so
     // it can be removed in jQuery 1.4+ .unbind or .die by using the original
     // callback as a reference.
-    if ( $.guid ) {
+    if ($.guid) {
       wrapper.guid = callback.guid = callback.guid || $.guid++;
     }
 
@@ -243,10 +243,10 @@
   //
   //  (Function) A new, debounced, function.
 
-  $.debounce = function( delay, at_begin, callback ) {
-    return callback === undefined
-      ? jq_throttle( delay, at_begin, false )
-      : jq_throttle( delay, callback, at_begin !== false );
+  debounce = function (delay, at_begin, callback) {
+    return callback === undefined ?
+      jq_throttle(delay, at_begin, false) :
+      jq_throttle(delay, callback, at_begin !== false);
   };
 
 })(this);
